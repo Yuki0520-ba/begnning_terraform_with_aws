@@ -2,3 +2,4 @@ aws_secret.yml
 .terraform
 *.lock.hcl
 *.tfstate
+*.tfstate.backup
