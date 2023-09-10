@@ -55,32 +55,32 @@ resource "aws_security_group" "iac-security-group" {
   vpc_id      = aws_vpc.iac-vpc.id
 
   ingress {
-    description      = "https access allow from anywhere."
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "https access allow from anywhere."
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    description      = "http access allow from anywhere."
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "http access allow from anywhere."
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    description      = "ssh access allow from anywhere."
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "ssh access allow from anywhere."
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port        = 0 # all port
-    to_port          = 0 # all port
-    protocol         = "-1"  # all protocol
+    from_port        = 0             # all port
+    to_port          = 0             # all port
+    protocol         = "-1"          # all protocol
     cidr_blocks      = ["0.0.0.0/0"] # all ip address
-    ipv6_cidr_blocks = ["::/0"]  # all ip address
+    ipv6_cidr_blocks = ["::/0"]      # all ip address
   }
 
   tags = {
@@ -102,7 +102,7 @@ resource "aws_network_interface" "iac-nw-interface" {
 ##### EC2 resouces. #####
 resource "aws_instance" "iac-instance" {
   ami               = "ami-0a21e01face015dd9" # Amazon linux2023
-  instance_type     = "t2.micro" # for free.
+  instance_type     = "t2.micro"              # for free.
   availability_zone = "ap-northeast-1a"
   key_name          = "aws-kensho"
 
@@ -117,7 +117,7 @@ resource "aws_instance" "iac-instance" {
               sudo systemctl start httpd
               sudo bash -c 'echo terraform practice! > /var/www/html/index.html' 
               EOF
-  tags  = {
+  tags = {
     Name = "iac-instance"
   }
 }
@@ -125,8 +125,8 @@ resource "aws_instance" "iac-instance" {
 resource "aws_eip" "iac-eip" {
   domain            = "vpc"
   network_interface = aws_network_interface.iac-nw-interface.id
-  depends_on        = [
-    aws_internet_gateway.iac-gateway, 
+  depends_on = [
+    aws_internet_gateway.iac-gateway,
     aws_instance.iac-instance
   ]
   tags = {
