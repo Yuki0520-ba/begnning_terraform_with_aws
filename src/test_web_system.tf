@@ -123,9 +123,9 @@ resource "aws_instance" "iac-instance" {
 }
 
 resource "aws_eip" "iac-eip" {
-  domain = "vpc"
+  domain            = "vpc"
   network_interface = aws_network_interface.iac-nw-interface.id
-  depends_on = [
+  depends_on        = [
     aws_internet_gateway.iac-gateway, 
     aws_instance.iac-instance
   ]
